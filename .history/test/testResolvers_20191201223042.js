@@ -1,0 +1,23 @@
+const EasyGraphQLTester = require('easygraphql-tester')
+const fs = require('fs')
+const path = require('path')
+
+const schemaCode = fs.readFileSync(path.join(__dirname, 'schema', 'schema.gql'), 'utf8')
+const tester = new EasyGraphQLTester(schemaCode)
+
+const query = `
+  {
+    getMe {
+      id
+      email
+      familyInfo {
+        father {
+          email
+        }
+        mother {
+          username
+        }
+      }
+    }
+  }
+`tester.test(true, query)
